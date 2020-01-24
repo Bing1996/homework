@@ -1,0 +1,28 @@
+clc
+clear
+clf
+
+load data2.mat
+data = unnamed;
+t = data(:,1); c = data(:,2);
+deltaT = 10;
+ec = zeros(20,1);  ect = zeros(20,1);
+
+for i = 2 : 1 : 21
+    ec(i) = ((c(i) + c(i-1)) / 2) * (deltaT);
+    ect(i) = ((c(i)*t(i) + c(i-1)*t(i-1)) / 2) * (deltaT);
+end
+data(:,3) = ec; data(:,4) = ect;
+
+t0 = sum(ect) / sum(ec);
+cn = sum(ec) / t0;
+
+theta = t./ t0;
+E = c ./ cn;
+
+data(:,5) = theta; data(:,6) = E;
+subplot(1,2,1)
+plot(data(:,1) , data(:,2));
+subplot(1,2,2)
+plot(data(:,1) , data(:,2));
+axis squ

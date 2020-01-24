@@ -1,0 +1,29 @@
+clc
+clear
+
+
+load data.mat;
+data = unnamed;
+order = data(:,1);
+R = data(:,2) * 0.01;
+Q = 100;
+c = 1;
+k = 1;
+x = zeros(1,9);
+
+for i = 1 : 1 : 1
+    if order(i) == 0
+        Vp = (Q/k)*R(i)*c;
+        Vs = (Q * R(i) * c)/(k);
+        x(i) = (Vs-Vp) / Vp;
+    elseif order (i) == 1
+        Vp = -(Q/k)*log((1-R(i)));
+        Vs = (Q * R(i) * c)/(k * (1 - R(i)) * c);
+        x(i) = (Vs-Vp) / Vp;
+    else
+        Vp = -(Q / k)*(1/c - 1/((1-R(i))*c))
+        Vs = (Q * R(i) * c)/(k * (1 - R(i)) * c^2)
+        x(i) = (Vs-Vp) / Vp;
+    end
+end
+x * 100
